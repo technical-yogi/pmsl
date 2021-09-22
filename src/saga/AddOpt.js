@@ -1,5 +1,5 @@
 import { put, call } from "@redux-saga/core/effects";
-import { AddOptSuccess, AddOptError } from "../actions/index";
+import { AddOptSuccess,ViewPollRequest,AddOptError} from "../actions/index";
 import axios from "axios";
 
 export function* AddOpt(action) {
@@ -12,6 +12,7 @@ export function* AddOpt(action) {
   try {
     if (response && response.data) {
       yield put(AddOptSuccess({ response: response.data }));
+      yield put(ViewPollRequest(id));
     } else {
       yield put(AddOptError({ error: "Data not fetched" }));
     }

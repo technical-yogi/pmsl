@@ -24,6 +24,7 @@ const useStyles = makeStyles((theme) => ({
     paddingBottom: "21px",
     border: "1px solid grey",
     marginBottom: "1%",
+    marginLeft:"20%"
   },
   button: {
     marginLeft: "43%",
@@ -52,9 +53,10 @@ const AdminPoll = () => {
       return (
         <Container
           className={classes.container}
-          maxWidth="sm"
+          maxWidth="md"
           justifyContent="center"
           className="border-none shadow rounded p-5 my-5 mx-auto"
+          
         >
           <Typography variant="h5" gutterBottom align="center">
             {value.title}

@@ -14,7 +14,13 @@ const useStyles = makeStyles((theme) => ({
   navlinks: {
     marginLeft: theme.spacing(10),
     display: "flex",
-  },
+    [theme.breakpoints.down('sm')]: {
+      marginLeft: theme.spacing(0),
+   },
+   [theme.breakpoints.up('md')]: {
+    marginLeft: theme.spacing(6),
+   },
+   },
   Toolbar: {
     variant: "grey",
   },
@@ -30,6 +36,12 @@ const useStyles = makeStyles((theme) => ({
     "&:hover": {
       color: "yellow",
       borderBottom: "1px solid white",
+      [theme.breakpoints.down('sm')]: {
+        marginLeft: theme.spacing(2),
+     },
+     [theme.breakpoints.up('md')]: {
+      marginLeft: theme.spacing(6),
+     },
     },
   },
 }));
@@ -39,6 +51,8 @@ const Navbar = () => {
   const stateSelector = useSelector(
     (state) => state && state.listAllPollState && state.listAllPollState
   );
+  
+  //condition to check wether is user is guest or admin
 
   React.useEffect(() => {
     console.log(stateSelector, "navbar data");

@@ -5,6 +5,7 @@ import axios from "axios";
 export function* VotePoll(action) {
   const {id, optText } = action.payload;
   const token = localStorage.getItem("token");
+  console.log(token,"asdf");
   const header = {access_token:token}
   let response = yield call(
     axios.get,

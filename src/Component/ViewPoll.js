@@ -21,6 +21,7 @@ import AddIcon from "@material-ui/icons/Add";
 import history from "../history";
 import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";
+import Navbar from "./Navbar";
 
 const useStyles = makeStyles({
   container: {
@@ -42,27 +43,28 @@ const useStyles = makeStyles({
   },
 });
 
-const Alert = React.forwardRef(function Alert(props, ref) {
-  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
-});
-
 const ViewPoll = ({ match }) => {
   const titleUpdateState = useSelector(
-    (state) => state && state.TitlelUpdate && state.TitlelUpdate
+    (state)=> state && state.TitlelUpdate && state.TitlelUpdate
   );
   const newOptionState = useSelector(
-    (state) => state && state.AddOption && state.AddOption
+    (state)=> state && state.AddOption && state.AddOption
   );
   const deleteOptionState = useSelector(
-    (state) => state && state.DeleteOption && state.DeleteOption
+    (state)=> state && state.DeleteOption && state.DeleteOption
   );
 
-  const [open, setOpen] = React.useState(false);
+  const [open,setOpen] = React.useState(false);
+  const [deletesnack,setDeleteSnack] = React.useState(false); 
+  const [optionAddSnack,setoptionAddSnack] = React.useState(false);   
   const handleClose = (event, reason) => {
     if (reason === "clickaway") {
       return;
     }
-  };
+    setOpen(false);
+    setDeleteSnack(false);
+    setoptionAddSnack(false);
+  };    
 
   const dispatch = useDispatch();
   const classes = useStyles();
@@ -82,16 +84,24 @@ const ViewPoll = ({ match }) => {
   });
 
   const del_opt = (option) => {
-    setUserDetail({ ...userDetail, optText: option });
+    dispatch(DeleteOptRequest({ id: match.params.id,
+      optText: option, }));
   };
   if (userDetail.optText !== null) {
-    dispatch(DeleteOptRequest({ ...userDetail }));
   }
-
   var [updatep, setupdatep] = useState({
     id: match.params.id,
     title: " ",
   });
+  
+  React.useEffect(() => {
+    if (singlePollStatus.isSuccess) {
+      if (singlePollStatus.data.error === 0) {
+        setupdatep({...updatep,title:singlePollStatus?.data?.data?.title});
+      } else {
+      }
+    }
+  }, [singlePollStatus]);
 
   const setValue = (e) => {
     setupdatep({ ...updatep, title: e.target.value });
@@ -99,11 +109,24 @@ const ViewPoll = ({ match }) => {
   const TitleUpdate = (e) => {
     dispatch(UpdatePollRequest({ ...updatep }));
   };
+  // all snackbar details will here
   React.useEffect(() => {
     if (titleUpdateState.isSuccess) {
       setOpen(true);
     }
   }, [titleUpdateState]);
+
+  React.useEffect(() => {
+    if (deleteOptionState.isSuccess) {
+      setDeleteSnack(true);
+    }
+  }, [deleteOptionState]);
+
+  React.useEffect(() => {
+    if (newOptionState.isSuccess) {
+      setoptionAddSnack(true);
+    }
+  }, [newOptionState]);
 
   const [Noption, setNoption] = useState({
     id: match.params.id,
@@ -112,20 +135,23 @@ const ViewPoll = ({ match }) => {
   const setOption = (e) => {
     setNoption({ ...Noption, option: e.target.value });
   };
-  const optionAdded = (e) => {
-    dispatch(AddOptRequest({ ...Noption }));
-  };
-
+ 
   const [form, setform] = useState(false);
   const add = () => {
     setform(!form);
   };
+   const optionAdded = (e) => {
+    dispatch(AddOptRequest({ ...Noption }));
+    setform(!form);
+  };
+
   const saveChanges = () => {
     history.push(`/AdminPoll`);
   };
   if (singlePollStatus.data != null) {
     return (
       <div>
+        <Navbar/>
         <Container
           className={classes.container}
           maxWidth="md"
@@ -145,7 +171,7 @@ const ViewPoll = ({ match }) => {
 
             <Grid item lg={5} md={5}>
               <IconButton onClick={(e) => settfield(!tfiled)}>
-                <EditIcon />
+                <EditIcon/>
               </IconButton>
               <IconButton disabled={tfiled} onClick={TitleUpdate}>
                 <DoneIcon color="primary" />
@@ -154,7 +180,7 @@ const ViewPoll = ({ match }) => {
 
             <Snackbar
               open={open}
-              autoHideDuration={100}
+              autoHideDuration={1000}
               onClose={handleClose}
               message="title updated successfully"
               anchorOrigin={{
@@ -172,8 +198,19 @@ const ViewPoll = ({ match }) => {
                 </Grid>
                 <Grid item lg={5} md={5}>
                   <IconButton onClick={() => del_opt(element.option)}>
-                    <DeleteIcon color="secondary" />
+                    <DeleteIcon color="secondary"/>
                   </IconButton>
+            <Snackbar
+              open={deletesnack}  
+              autoHideDuration={1000}
+              onClose={handleClose}
+              message="option deleted"
+              anchorOrigin={{
+                vertical: "top",
+                horizontal: "right",
+              }}
+            ></Snackbar>
+
                 </Grid>
               </Grid>
             );
@@ -185,6 +222,7 @@ const ViewPoll = ({ match }) => {
                   type={form ? "text" : "hidden"}
                   className={classes.newoption}
                   onChange={setOption}
+                  defaultValue={''}
                 ></input>
               </form>
             </Paper>
@@ -201,6 +239,16 @@ const ViewPoll = ({ match }) => {
               <IconButton onClick={add}>
                 <AddIcon color="primary" />
               </IconButton>
+              <Snackbar
+              open={optionAddSnack}  
+              autoHideDuration={1000}
+              onClose={handleClose}
+              message="option added"
+              anchorOrigin={{
+                vertical: "top",
+                horizontal: "right",
+              }}
+            ></Snackbar>
               <Button color="primary" onClick={saveChanges}>
                 save
               </Button>
@@ -210,7 +258,10 @@ const ViewPoll = ({ match }) => {
       </div>
     );
   } else {
-    return <h4>please wait</h4>;
+    return (<div>
+      <Navbar/>
+       <h4>please wait</h4>
+       </div>);
   }
 };
 export default ViewPoll;

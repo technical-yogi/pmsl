@@ -12,10 +12,12 @@ import FormControl from "@material-ui/core/FormControl";
 import InputLabel from "@material-ui/core/InputLabel";
 import { TextField } from "@material-ui/core";
 import Grid from "@material-ui/core/Grid";
-import {AddPollRequest} from '../actions/index'
-import { useDispatch} from "react-redux";
+import { AddPollRequest } from "../actions/index";
+import { useDispatch } from "react-redux";
 import history from "../history";
-import EditIcon from '@material-ui/icons/Edit';
+import EditIcon from "@material-ui/icons/Edit";
+import AdminPoll from "./AdminPoll";
+import Navbar from "./Navbar";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -40,33 +42,34 @@ function TabPanel(props) {
 TabPanel.propTypes = {
   children: PropTypes.node,
   index: PropTypes.any.isRequired,
-  value: PropTypes.any.isRequired
+  value: PropTypes.any.isRequired,
 };
 
 function a11yProps(index) {
   return {
     id: `vertical-tab-${index}`,
-    "aria-controls": `vertical-tabpanel-${index}`
+    "aria-controls": `vertical-tabpanel-${index}`,
   };
 }
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
-    backgroundColor: theme.palette.background.paper,
+    // backgroundColor: theme.palette.background.paper,
     display: "flex",
-    height: 224
   },
   tabs: {
-    borderRight: `1px solid ${theme.palette.divider}`
+    borderRight: `1px solid ${theme.palette.divider}`,
+    backgroundColor: "white",
+    boxShadow : "4px",
   },
   title: {
-    padding: "27px 141px 10px"
+    padding: "27px 141px 10px",
   },
   optcontainer: {
     border: "1px solid grey",
-    background: "whitesmoke"
-  }
+    background: "whitesmoke",
+  },
 }));
 
 const Admin = () => {
@@ -84,25 +87,30 @@ const Admin = () => {
     option2: "",
     option3: "",
     option4: "",
-});
+  });
 
-const setPollValue = (e, key) => {
-    setpolldetail({...polldetail, [key]: e.target.value });
+  const setPollValue = (e, key) => {
+    setpolldetail({ ...polldetail, [key]: e.target.value });
   };
-
-  const handleSubmit = e => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    if (polldetail.title && polldetail.option1 && polldetail.option2 && polldetail.option3 && polldetail.option4) {
+    if (
+      polldetail.title &&
+      polldetail.option1 &&
+      polldetail.option2 &&
+      polldetail.option3 &&
+      polldetail.option4
+    ) {
       console.log("onsubmit performed");
-      dispatch(AddPollRequest({ ...polldetail}));
+      dispatch(AddPollRequest({ ...polldetail }));
       history.push(`/AdminPoll`);
     }
   };
-
   return (
     <div>
-      <h3>Admin Page</h3>
-      <AddIcon fontSize="large" />
+      <Navbar />
+       <Typography align="center" variant="h3">Admin Page</Typography>
+      {/* <AddIcon fontSize="large" /> */}
       <div className={classes.root}>
         <Tabs
           orientation="vertical"
@@ -123,24 +131,23 @@ const setPollValue = (e, key) => {
             justifyContent="center"
           >
             <form className={classes.optcontainer} onSubmit={handleSubmit}>
-              
               <TextField
                 required
                 id="outlined-required"
                 label="Required"
-                defaultValue="title"
+                defaultValue=""
                 variant="filled"
                 className={classes.title}
-                onChange={e => setPollValue(e, "title")}
+                onChange={(e) => setPollValue(e, "title")}
               />
-            
+
               <Grid container direction={"row"} spacing={3}>
                 <Grid item>
                   <TextField
                     id="outlined-basic"
                     label="option1"
                     variant="outlined"
-                    onChange={e => setPollValue(e, "option1")}
+                    onChange={(e) => setPollValue(e, "option1")}
                   />
                 </Grid>
                 <Grid item>
@@ -148,7 +155,7 @@ const setPollValue = (e, key) => {
                     id="outlined-basic"
                     label="option2"
                     variant="outlined"
-                    onChange={e => setPollValue(e, "option2")}
+                    onChange={(e) => setPollValue(e, "option2")}
                   />
                 </Grid>
                 <Grid item>
@@ -156,7 +163,7 @@ const setPollValue = (e, key) => {
                     id="outlined-basic"
                     label="option3"
                     variant="outlined"
-                    onChange={e => setPollValue(e, "option3")}
+                    onChange={(e) => setPollValue(e, "option3")}
                   />
                 </Grid>
                 <Grid item>
@@ -164,12 +171,16 @@ const setPollValue = (e, key) => {
                     id="outlined-basic"
                     label="option4"
                     variant="outlined"
-                    onChange={e => setPollValue(e, "option4")}
+                    onChange={(e) => setPollValue(e, "option4")}
                   />
                 </Grid>
               </Grid>
               <Typography variant="h2" gutterBottom align="center">
-                <Button variant="contained" color="primary" onClick={handleSubmit}>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  onClick={handleSubmit}
+                >
                   Add
                 </Button>
               </Typography>
@@ -177,13 +188,14 @@ const setPollValue = (e, key) => {
           </Container>
         </TabPanel>
         <TabPanel value={value} index={1}>
-        <Button variant="contained" color="primary" onClick={()=>history.push("/AdminPoll")}> 
+          {/* <Button variant="contained" color="primary" onClick={()=>history.push("/AdminPoll")}> 
                   view&modify
-                </Button>
+                </Button> */}
+          <AdminPoll />
         </TabPanel>
-        <TabPanel value={value} index={2}>
+        {/* <TabPanel value={value} index={2}>
           Delete Poll
-        </TabPanel>
+        </TabPanel> */}
       </div>
     </div>
   );
