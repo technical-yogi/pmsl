@@ -28,7 +28,7 @@ const useStyles = makeStyles(theme => ({
     marginTop: "3%"
   }
 }));
-//css ended
+
 const Poll = () => {
   const dispatch = useDispatch();
   const classes = useStyles();
@@ -48,14 +48,11 @@ const Poll = () => {
     optText: ""
   }); 
 
-  //     React.useEffect(() => {
-  //    console.log(stateSelector, "userpolldata");
-  //     }, [stateSelector]);
+
   let data;
   if (stateSelector.data != null) {
     data = stateSelector?.data?.data?.map(value => {
       return (
-        //phead=pole_head ohead = option_head
 
         <Container
           className={classes.container}

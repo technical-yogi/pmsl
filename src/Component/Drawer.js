@@ -8,7 +8,6 @@ import {
  makeStyles
 } from "@material-ui/core";
 import { Link } from "react-router-dom";
-// import MenuIcon from '@material-ui/icons/Menu';
 import { Icon } from '@material-ui/core';
 
 
@@ -51,7 +50,6 @@ const classes = useStyles();
         </List>
       </Drawer>
       <IconButton onClick={() => setOpenDrawer(!openDrawer)}>
-        {/* <MenuIcon /> */}
       </IconButton>
     </>
   );

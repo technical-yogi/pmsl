@@ -8,7 +8,6 @@ const initialState = {
 };
 
 const ViewPoll = (state = initialState, action) => {
-  // console.log(action.payload,"asdfasdf");
   switch (action.type) {
     case actions.VIEW_POLL_REQUEST:
       return {

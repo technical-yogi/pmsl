@@ -4,23 +4,23 @@ import {
   Toolbar,
   CssBaseline,
   Typography,
-  makeStyles
+  makeStyles,
 } from "@material-ui/core";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import DrawerComponent from "./Drawer";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   navlinks: {
     marginLeft: theme.spacing(10),
-    display: "flex"
+    display: "flex",
   },
   Toolbar: {
     variant: "grey",
   },
   logo: {
     flexGrow: "1",
-    cursor: "pointer"
+    cursor: "pointer",
   },
   link: {
     textDecoration: "none",
@@ -29,30 +29,25 @@ const useStyles = makeStyles(theme => ({
     marginLeft: theme.spacing(13),
     "&:hover": {
       color: "yellow",
-      borderBottom: "1px solid white"
-    }
-  }
+      borderBottom: "1px solid white",
+    },
+  },
 }));
 const Navbar = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const stateSelector = useSelector(
-    state => state && state.listAllPollState && state.listAllPollState
+    (state) => state && state.listAllPollState && state.listAllPollState
   );
-  // const call =  () =>{
-  //   dispatch(listAllPollRequest()); 
-  //   }
 
   React.useEffect(() => {
     console.log(stateSelector, "navbar data");
   }, [stateSelector]);
-  let redirect ;
-  if(localStorage.getItem('userType') === "admin")
-  {
+  let redirect;
+  if (localStorage.getItem("userType") === "admin") {
     redirect = "/Admin";
-  }
-  else{
-    redirect = "/Poll"
+  } else {
+    redirect = "/Poll";
   }
 
   return (
@@ -68,9 +63,7 @@ const Navbar = () => {
               Home
             </Link>
             <Link className={classes.link} to={redirect}>
-              
               Poll
-
             </Link>
             <Link to="/Signout" className={classes.link}>
               Signout
@@ -78,8 +71,6 @@ const Navbar = () => {
           </div>
         </Toolbar>
       </AppBar>
-
-
     </div>
   );
 };

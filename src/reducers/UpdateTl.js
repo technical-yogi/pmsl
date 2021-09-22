@@ -8,7 +8,6 @@ const initialState = {
 };
 
 const UpdateTl = (state = initialState, action) => {
-  // console.log(action.payload,"asdfasdf"); 
   switch (action.type) {       
     case actions.UPDATE_POLL_REQUEST:
       return {

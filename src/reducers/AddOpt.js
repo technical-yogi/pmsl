@@ -21,7 +21,7 @@ const AddOpt = (state = initialState, action) => {
         isLoading: false,
         isSuccess: true,
         isError: false,
-        data: action.payload.response,  // got it 
+        data: action.payload.response,   
       };
     case actions.ADD_OPT_ERROR:
       return {
