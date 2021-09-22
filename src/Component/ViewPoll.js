@@ -27,17 +27,16 @@ const useStyles = makeStyles({
   
   container :{
     border: "1px solid grey",
-    // backgroundColor: "cadetblue",
     padding : "24px",
     marginTop: "30px",    
   },
   title :{
     marginTop: "3px",
     width:"100%",
-    // backgroundColor :"teal",
+    
   },
   paper : {
-    // backgroundColor :"teal",
+   
   },
   last : {
     display: "flex",
@@ -67,11 +66,6 @@ const ViewPoll = ({ match }) => {
  //snackbar 
 
  const [open, setOpen] = React.useState(false);
-
-  // const handleClick = () => {
-  //   setOpen(true);
-  // };
-
   const handleClose = (event, reason) => {
     if (reason === 'clickaway') {
       return;
@@ -211,9 +205,7 @@ const ViewPoll = ({ match }) => {
               horizontal: 'right'
             }}
            >
-        {/* <Alert onClose={handleClose} severity="success" sx={{ width: '100%' }}> */}
-          {/* title updatad successfully
-        </Alert> */}
+        
          </Snackbar>
 
            </Grid>
