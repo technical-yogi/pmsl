@@ -93,7 +93,6 @@ const setPollValue = (e, key) => {
   const handleSubmit = e => {
     e.preventDefault();
     if (polldetail.title && polldetail.option1 && polldetail.option2 && polldetail.option3 && polldetail.option4) {
-      // console.log(credentials, "__________credentials");
       console.log("onsubmit performed");
       dispatch(AddPollRequest({ ...polldetail}));
       history.push(`/AdminPoll`);
@@ -124,10 +123,7 @@ const setPollValue = (e, key) => {
             justifyContent="center"
           >
             <form className={classes.optcontainer} onSubmit={handleSubmit}>
-              {/* <FormControl variant="filled">
-        <InputLabel htmlFor="component-filled">Title</InputLabel>
-        <FilledInput id="component-filled" />
-      </FormControl> */}
+              
               <TextField
                 required
                 id="outlined-required"
@@ -137,12 +133,7 @@ const setPollValue = (e, key) => {
                 className={classes.title}
                 onChange={e => setPollValue(e, "title")}
               />
-              {/* <div className = "optionContainer">
-      <TextField id="outlined-basic" label="option1" variant="outlined" />
-      <TextField id="outlined-basic" label="option2" variant="outlined" />
-      <TextField id="outlined-basic" label="option3" variant="outlined" />
-      <TextField id="outlined-basic" label="option4" variant="outlined" />
-      </div> */}
+            
               <Grid container direction={"row"} spacing={3}>
                 <Grid item>
                   <TextField
