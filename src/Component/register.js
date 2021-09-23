@@ -93,8 +93,7 @@ const Register = () => {
   }, []);
 
   React.useEffect(() => {
-    console.log(selectorState2, "selectorState2");
-
+    // console.log(selectorState2, "selectorState2");
     if (selectorState2.isSuccess) {
       if (selectorState2.data.error === 0) {
         history.push("/Dashboard");
